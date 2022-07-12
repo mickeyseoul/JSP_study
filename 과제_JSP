@@ -1,1 +1,71 @@
+<%@page import="myPkg.BookBean"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.DriverManager"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+Result_result박이랑.jsp <br>
+
+<!-- 
+ojdbc8.jar 파일(jdbc연결)
+C:\oracle\product\12.2.0\dbhome_1\jdbc\lib
+
+serlet-api.jar 파일(jsp)
+C:\Tomcat 9.0\lib
+
+java 폴더 - myPkg 패키지 생성 - Bean 파일 생성 후 사용시 import 하기
+ -->
+ 
+ <%
+ request.setCharacterEncoding("UTF-8");
+ String title = request.getParameter("title");
+ String author = request.getParameter("author");
+ String publisher = request.getParameter("publisher");
+ String price = request.getParameter("price");
+ String date = request.getParameter("date");
+ String kind = request.getParameter("kind");
+ String[] bookstore = request.getParameterValues("bookstore"); //checkbox
+ String count = request.getParameter("count");
+ 
+ //BookBean bb = new BookBean();
+
+ %>
+ 
+ <jsp:useBean class="myPkg.BookBean" id="bb1"/>
+ 
+ <jsp:setProperty property="*" name="bb1"/>
+ 
+ 제목 : <jsp:getProperty property="title" name="bb1"/> <br>
+ 저자 : <jsp:getProperty property="author" name="bb1"/> <br>
+ 출판사 : <jsp:getProperty property="publisher" name="bb1"/> <br>
+ 가격 : <jsp:getProperty property="price" name="bb1"/> <br>
+ 입고일 : <jsp:getProperty property="date" name="bb1"/> <br>
+ 배송비 : <jsp:getProperty property="kind" name="bb1"/> <br>
+ 
+ 구입가능 서점 : <%
+ for(int i=0;i<bb1.getKind().length;i++){
+	 out.print(getKind[i]+" "); 
+ }
+ 
+ 보유수량 : %>
+ 
+ <jsp:getProperty property="count" name="bb1"/> <br>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ package myPkg;
+
+public class BookBean {
+	private String title;
+	private String author;
+	private String publisher;
+	private String price;
+	private String date;
+	private String kind;
+	private String[] bookstore;
+	private String count;
+}
 
