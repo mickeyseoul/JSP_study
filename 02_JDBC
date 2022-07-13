@@ -1,1 +1,58 @@
+▶JSP Java Server Page
+html내에 자바 코드를 삽입하여 웹 서버에서 동적으로 웹 페이지를 생성하여 웹 브라우저에게 돌려주는 언어
+Java의 웹 서버 프로그램 servlet으로 변환되어 서비스됨
+
+-servlet : java의 웹 서버 프로그램
+
+-tomcat
+웹서버
+웹 컨테이너
+
+▶웹프로그래밍
+:클라이언트(웹 브라우저)의 요청(request) 
+-> 웹 서버 처리 후 응답(response)
+-> 클라이언트
+
+-웹 프로그래밍
+클라이언트(client)
+서버(server)
+
+
+------------------------------------------------------------------------------------
+▶JSP_JDBC
+java : 데이터베이스 작업 Dao/Bean
+jsp : 화면 출력하는 내용만 담당
+
+
+▶jsp 이용한 jdbc 작업 위한 기본 설정
+
+1) 두가지 jar 파일 WEB-INF - lib에 가져다 넣기
+ojdbc8.jar 파일(oracle연결)
+C:\oracle\product\12.2.0\dbhome_1\jdbc\lib
+
+servlet-api.jar 파일(jsp)
+C:\Tomcat 9.0\lib
+
+2) Bean/Dao 클래스 만들기
+src/main/java 폴더 - myPkg 패키지 생성 - Bean/Dao 클래스 생성 후 사용시 import 
+*
+  Bean : 데이터베이스의 데이터 저장위한 공간
+  Dao : oracle과 연결하여 jdbc 작업을 처리하는 공간
+
+▶JSP_JDBC 작업 순서
+기준 select.jsp :전체조회/테이블 작업 +insert버튼/update/delete 기능 첨가하기
+
+insertForm.jsp
+insertProc.jsp
+
+updateForm.jsp  select.jsp에서 넘어갈때 form에서 ? 방식으로 대표번호 하나 넘겨야함
+updateProc.jsp
+
+deleteProc.jsp select.jsp에서 넘어갈때 form에서 ? 방식으로 대표번호 하나 넘겨야함
+
+
+
+
+
+
 
