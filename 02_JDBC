@@ -41,7 +41,7 @@ src/main/java 폴더 - myPkg 패키지 생성 - Bean/Dao 클래스 생성 후 �
 
 ▶JSP_JDBC 작업 순서
 1)
-select.jsp      -dao.getAllData() 작업 :oracle에 있는 모든 데이터 전체조회/테이블 작업 
+select.jsp      -dao.getAllData() 작업 :oracle에 있는 모든 데이터 ArrayList<Bean>으로 가져와 전체조회/테이블 작업 
                 +insert버튼/update/delete 기능 첨가하기
                
 2) select.jsp에서 insert 글자 누르면
