@@ -40,15 +40,22 @@ src/main/java 폴더 - myPkg 패키지 생성 - Bean/Dao 클래스 생성 후 �
   Dao : oracle과 연결하여 jdbc 작업을 처리하는 공간
 
 ▶JSP_JDBC 작업 순서
-기준 select.jsp :전체조회/테이블 작업 +insert버튼/update/delete 기능 첨가하기
-
+1)
+select.jsp      -dao.getAllData() 작업 :oracle에 있는 모든 데이터 전체조회/테이블 작업 
+                +insert버튼/update/delete 기능 첨가하기
+               
+2) select.jsp에서 insert 글자 누르면
 insertForm.jsp
-insertProc.jsp
+insertProc.jsp  -dao.insertData(bean) 작업 :작성된 value들을 Bean으로 묶어 insert 작업
 
-updateForm.jsp  select.jsp에서 넘어갈때 form에서 ? 방식으로 대표번호 하나 넘겨야함
-updateProc.jsp
+3) select.jsp에서 update 글자 누르면
+updateForm.jsp  -select.jsp에서 선택한 하나의 대표 col을 넘겨받아야 함(form에서 ? 방식으로)
+                -dao.getDataByCol(col) 작업 : 대표 col을 넘겨받아 데이터한 줄을 뽑아내어 updateForm에 선택한 데이터 넣어놓는 작업
+updateProc.jsp  -dao.updateData(bean) 작업 : updateForm에서 수정된 value들 가지고 update작업
 
-deleteProc.jsp select.jsp에서 넘어갈때 form에서 ? 방식으로 대표번호 하나 넘겨야함
+4)  select.jsp에서 delete 글자 누르면
+deleteProc.jsp  -select.jsp에서 선택한 하나의 대표 col을 넘겨받아야 함(form에서 ? 방식으로)
+                -dao.deleteData(col) 작업
 
 
 
