@@ -55,16 +55,32 @@ include 액션태그와 비교
 <%!  %> Declaration 선언문  :메서드 정의
 <%=  %> Expression 표현식 :어떤  값을 출력 결과에 포함시키고자 할 때 사용(변수출력, 리턴값이 있는 메서드 호출할 때)
 
-▷Implicit Object 내장객체 
+▷Implicit Object 내장객체(참조변수)
 JSP에 자동으로 만들어져 있는 객체 != 클래스가 이미 만들어져 있는 것과 다름
 *
 종류
 out 	:웹 브라우저와의 연결을 담당하는 객체
 	 out.print()
-request :form의 요청에 응답하여 name의 값을 가져옴
+request :form의 요청에 응답하여 name의 value를 가져옴 ★
 	 request.getParameter()
+response
+session
 
 ▷Action Tag 액션 태그
+
+
+▷
+1) form에서 데이터 챙기는 법
+value 속성 +hidden
+?
++2차 전달
+session.setAttribute("abc", name);
+액션태그
+
+2) 보낸 데이터 받는 방법
+request.getParameter("name")
+session.getAttribute("abc");
+
 
 
 ----------------------------------------------------------------------------
@@ -85,71 +101,67 @@ Ex01_result.jsp?name=kim&age=12
 한글 깨짐 -> result 페이지에 처리 필수 request.setCharacterEncoding("UTF-8");
 
 ▷내장객체 request
-:요청한 쪽에서 정보가 담김 ★
-String value = request.getParameter("name값")
-String[] values = request.getParameterValues("name값") //checkbox의 value값 전부 배열로 리턴
-String[] names = request.getParameterNames() 
-  체크한(값이 있는) name값만 전부 배열로 리턴
-  체크 안한 name은 아예 넘어오지를 않음 -> 체크 안하는 것을 허용하려면 일일이 가져오는 방법을 선택해야 함
+:요청한 쪽에서 정보가 담김 ★ 해당 name의 value 리턴함
+getParameter() 전부 '문자열'로 가져옴
+-
+	String value = request.getParameter("name값")
+	String[] values = request.getParameterValues("name값") //checkbox의 value값 전부 배열로 리턴
+	String[] names = request.getParameterNames() 
+ 	 체크한(값이 있는) name값만 전부 배열로 리턴
+ 	 체크 안한 name은 아예 넘어오지를 않음 -> 체크 안하는 것을 허용하려면 일일이 가져오는 방법을 선택해야 함
 
 
 ▶03_response	*request 객체를 공유하지 않음	cf)forwardActionTag 비교 거쳐가는 페이지
-:response1 web출력 전혀 안되고 바로 reponse2.jsp로 감 cf)콘솔 출력은 됨
+form.jsp -> response1.jsp ->  reponse2.jsp
+:response1.jsp web출력 X -> reponse2.jsp 출력  cf)코드 실행O, 콘솔 출력O
 최종페이지와 주소가 같음 http://localhost:8080/01_Basic/03_response/reponse2.jsp
-response 내장객체 참조변수
 request로 요청한 form의 정보 reponse2.jsp로 안넘어감 -> request 객체를 공유하지 않음
+
 -
 	//HttpServletRequest response = new HttpServletRequest();
 	response.sendRedirect("reponse2.jsp"); 
 
 
-챙겨가는 법(1) ★
+챙겨가는 법 ★
 -
  	response.sendRedirect("reponse2.jsp?msg="+msg);
-이런식으로 억지로 챙겨보낼 수 있음
+	이런식으로 억지로 챙겨보낼 수 있음
 
 
 ▶04_session	*request 객체를 공유함
-:result1 출력 후 result2 출력
+form.jsp -> result1.jsp -> result2.jsp
+:result1 출력 -> result2 출력
 session 웹브라우저당 하나의 객체 만들어짐
--> 하나의 웹브라우저당 공통으로 쓰이는 것이 필요할 때 사용
-//ex)로그인 계정 사용
+-> 하나의 웹브라우저당 공통으로 쓰이는 것이 필요할 때 사용 ex)로그인 계정 사용
 
-1 -> 2(session설정,form설정) -> 3(session가져오기)
-챙겨가는 법(2) ★
 -
-	2
+	result1.jsp
 	//HttpSession session = new HttpSession();
  	 session.setAttribute("abc", id); //속성명, 값 abc이름에 id값(abc=kim)
 -
-	2
+	result1.jsp
 	session.setMaxInactiveInterval(10); // 1 = 1초 // 기본 30분
 -
-	3
+	result2.jsp
 	String id = (String)session.getAttribute("abc");
 -
-	3
+	result2.jsp
  	session.invalidate() 
 	설정 무효화 
 	ex)로그아웃 버튼
 
-챙겨가는 법(3)
-form
-hidden form에 있지만 보이지 않음
-<input type="hidden" name="id" value="<%= id%>"> <br>
-<input type="hidden" name="passwd" value="<%= passwd%>"> <br>
 
 
 ---
 form -> via -> result
 via에서 하는 작업
 
-▶05_includingActionTag	*request 객체를 공유함
+▶05_includeActionTag	*request 객체를 공유함
 :via 출력 후 -> result 출력 후 -> via
 최종페이지와 주소가 같지 않음 http://localhost:8080/01_Basic/05_includeActionTag/Ex01_via.jsp
-request 객체를 공유함
+
 -
-  <jsp:include page="Ex01_result.jsp"/> <!-- 자식태그 없다면 여는태그 자식태그 같이 쓸 수 있음 -->
+  <jsp:include page="Ex01_result.jsp"/> <!-- 자식태그 없다면 여는태그 자식태그 /로 같이 쓸 수 있음 -->
 
 ▷추가하고싶은 데이터 있다면
 -
@@ -157,22 +169,13 @@ request 객체를 공유함
 	    <jsp:param value="30" name="age"/> 
   </jsp:include>
   
-  
-  
 include 지시어 : 외부화일 복사붙여넣기(코드 자체를)
 include 액션태그 : 실행한 결과를 가져옴 -> 미완성된 파일 못가져옴
 
-▷Aciont태그
-xml 문법 사용 XML Expensible Markup Language
-xml 문법에서는 주석 처리하면 에러남
-request 객체 공유
-namespace
-  동일한 이름의 태그 충돌을 방지하기 위한 개념
-  <namespace:tag이름>의 형식으로 사용
 
 
 ▶06_forwardActionTag	*request 객체를 공유함	cf)response 비교 거쳐가는 페이지
-:via 출력X(웹브라우저 출력없이 잠깐거쳤다가) -> result 출력 후 -> via(다시 돌아온 후의 웹브라우저 출력도 안함)
+:via 출력X -> result 출력 후 -> via(다시 돌아온 후의 웹브라우저 출력도 안함)
 최종페이지와 주소가 같지 않음 http://localhost:8080/01_Basic/06_forwardActionTag/Ex01_via.jsp
 거쳐가는 페이지 안보이게 하고 싶을 때/보통 DB작업을 여기서 함
 
@@ -183,3 +186,11 @@ namespace
 	<jsp:param value="50" name="age"/>
 	</jsp:forward> 
 
+
+▷Aciont태그
+xml 문법 사용 XML Expensible Markup Language
+xml 문법에서는 주석 처리하면 에러남
+request 객체 공유
+namespace
+  동일한 이름의 태그 충돌을 방지하기 위한 개념
+  <namespace:tag이름>의 형식으로 사용
