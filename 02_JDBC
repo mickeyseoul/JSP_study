@@ -40,7 +40,7 @@ src/main/java 폴더 - myPkg 패키지 생성 - Bean/Dao 클래스 생성 후 �
   Dao : oracle과 연결하여 jdbc 작업을 처리하는 공간
 
 +
-3) juery 사용시
+3) jQuery 사용시
 js 파일 Webapp에 가져다 놓기
 
 
