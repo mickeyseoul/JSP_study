@@ -12,7 +12,7 @@ Dao 클래스는 객체 생성 한번으로 공유 가능
 	
 	private static DataDao instance;   //static <- static 메서드에서는 static 변수만 사용 가능하기 때문
 	
-	public static DataDao getInstance() {  //static <- 객체 만들지 않고 호출 가능하기 때문***
+	public static DataDao getInstance() {  //static <- 객체 만들지 않고 호출 가능하기 때문*** //public <- 다른 클래스에서 사용 가능
 		if(instance == null) {
 			System.out.println("인스턴스(객체) 생성");
 			instance = new DataDao(); //현재 클래스 안에서만 객체 생성 가능
