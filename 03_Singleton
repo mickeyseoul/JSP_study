@@ -1,17 +1,21 @@
-싱글톤 패턴으로 객체 생성하기
+▶싱글톤 패턴으로 객체 생성하기
+:객체 생성 딱 한번만 가능
+데이터베이스 작업할 때 Bean 클래스는 사용 할 때마다 새롭게 생성해서 써야하지만,
+Dao 클래스는 객체 생성 한번으로 공유 가능
+
 -
-  public class Test {
+  public class DataDao {
 	
-	private Test(){   //private <- 다른 클래스에서 기본 객체생성 방식으로는 생성자 못쓰도록
+	private DataDao(){   //private <- 다른 클래스에서 기본 객체생성 방식으로는 생성자 못쓰도록
 		System.out.println("Test 생성자");
 	}
 	
-	private static Test instance;   //static <- static 메서드에서는 static 변수만 사용 가능하기 때문
+	private static DataDao instance;   //static <- static 메서드에서는 static 변수만 사용 가능하기 때문
 	
-	public static Test getInstance() {  //static <- 객체 만들지 않고 호출 가능하기 때문***
+	public static DataDao getInstance() {  //static <- 객체 만들지 않고 호출 가능하기 때문***
 		if(instance == null) {
 			System.out.println("인스턴스(객체) 생성");
-			instance = new Test(); //현재 클래스 안에서만 객체 생성 가능
+			instance = new DataDao(); //현재 클래스 안에서만 객체 생성 가능
 		}
 		return instance; //주소
 	}
@@ -24,16 +28,16 @@
 
 	public static void main(String[] args) {
 		
-		//Test ts1 = new Test(); //객체 생성 못함(생성자가 private이라 안보임)
+		//DataDao ddao = new Test(); //객체 생성 못함(생성자가 private이라 안보임)
 		
-		Test ts1 = Test.getInstance(); //다른 클래스 static 메서드 사용시 클래스 이름으로 접근 가능***
-		System.out.println("ts1:"+ts1); //ts1:Test2@123772c4
+		DataDao ddao1 = DataDao.getInstance(); //다른 클래스에서 static 메서드 사용시 클래스 이름으로 접근 가능***
+		System.out.println("ddao1:"+ddao1); //ts1:Test2@123772c4
 		
-		Test ts2 = Test.getInstance();
-		System.out.println("ts2:"+ts2); //ts2:Test2@123772c4
+		DataDao ddao2 = DataDao.getInstance();
+		System.out.println("ddao2:"+ddao2); //ts2:Test2@123772c4
 		
-		Test ts3 = Test.getInstance();
-		System.out.println("ts3:"+ts3); //ts3:Test2@123772c4
+		DataDao ddao3 = DataDao.getInstance();
+		System.out.println("ddao3:"+ddao3); //ts3:Test2@123772c4
 
 	}
   
