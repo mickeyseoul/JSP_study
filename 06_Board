@@ -1,1 +1,59 @@
+JSP_Board 게시판 만들기
+
+
+
+▶페이지
+pageSize 한 페이지당 레코드 갯수
+pageNum 현재 보고있는 페이지 번호
+
+▷현재페이지(pageNum) 기준 페이지 사이즈(pageSize)만큼 레코드 뽑아 조회
+bdao.getArticles(startRow, endRow) 작업
+1) sql : startRow에서 endRow만큼 레코드 조회 + ref 내림차순 re_step 오름차순으로
+String sql = "select rank, ref, re_step, re_level 
+              from (select rownum as rank, select ref, re_step, re_level 
+              from (select ref, re_step, re_level from board order by ref desc, re_step asc
+              )) where rank between ? and ?;"
+
+1. select ref, re_step, re_level from board order by ref desc, re_step asc;
+ref 내림차순 re_step 오름차순
+
+2. select rownum as rank, select ref, re_step, re_level from ();
+rownum as rank 설정
+
+3. select rank, ref, re_step, re_level from () where rank between ? and ?;
+rank 사용
+? ? startRow endRow
+
+*rownum 입력한 순서대로 번호를 매기는 특수칼럼
+
+
+▶글 읽기
+bdao.getArticle(num) 작업
+1) sql 1 : 레코드를 불러오기 전 readcount+1 update 먼저 실행
+update board set readcount = readcount+1 where num = ?;
+2) sql 2 : 선택한 Article select
+select * from board where num = ?;
+
+
+▶원글/답글 쓰기
+ref : 원글과 그 답글들이 공통으로 공유하는 번호
+원글의 primary key(시퀀스)와 일치시킴
+re_step : 원글의 답글들 중 최신순 정렬
+re_level : 0원글 1답글 2답답글 
+
+▷원글
+bdao.insertArticle(bbean) 작업
+1) sql : insert작업할 때 시퀀스.nextval을 num(primary key)과 같이 ref도 채워줌
+insert into board(num,ref,re_step,re_level) values(board_seq.nextval,board_seq.nextval,?,?);
+
+▷답글
+bdao.replyArticle(bbean) 작업
+1) sql 1 : 원글 ref와 같고 원글 re_step보다 큰경우(부모글보다 최신글) => re_step+1 먼저 실행
+update board set re_step=re_step+1 where ref = ? and re_step>?;
+
+2) sql 2 :답글 insert 작업 ? 세팅 시 답글의 re_step+1 re_level+1 해주기
+insert into board(num,ref,re_step,re_level) values(board_seq.nextval,?,?,?);
+ps.setInt(1, bbean.getRef());
+ps.setInt(2, bbean.getRe_step()+1);
+ps.setInt(3, bbean.getRe_level()+1);
 
