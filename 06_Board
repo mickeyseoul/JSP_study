@@ -2,7 +2,7 @@ JSP_Board 게시판 만들기
 
 
 
-▶페이지
+▶페이지(조회)
 pageSize 한 페이지당 레코드 갯수
 pageNum 현재 보고있는 페이지 번호
 
@@ -27,7 +27,7 @@ rank 사용
 *rownum 입력한 순서대로 번호를 매기는 특수칼럼
 
 
-▶글 읽기
+▶글 읽기(조회)
 bdao.getArticle(num) 작업
 1) sql 1 : 레코드를 불러오기 전 readcount+1 update 먼저 실행
 update board set readcount = readcount+1 where num = ?;
@@ -35,7 +35,7 @@ update board set readcount = readcount+1 where num = ?;
 select * from board where num = ?;
 
 
-▶원글/답글 쓰기
+▶원글/답글 쓰기(insert)
 ref : 원글과 그 답글들이 공통으로 공유하는 번호
 원글의 primary key(시퀀스)와 일치시킴
 re_step : 원글의 답글들 중 최신순 정렬
@@ -56,4 +56,14 @@ insert into board(num,ref,re_step,re_level) values(board_seq.nextval,?,?,?);
 ps.setInt(1, bbean.getRef());
 ps.setInt(2, bbean.getRe_step()+1);
 ps.setInt(3, bbean.getRe_level()+1);
+
+
+▶글 수정(update)
+▷ updateForm.jsp 작업 /* 수정 첫번째 */
+
+▷ updateProc.jsp 작업 /* 수정 두번째 */
+
+
+
+
 
