@@ -64,6 +64,16 @@ ps.setInt(3, bbean.getRe_level()+1);
 ▷ updateProc.jsp 작업 /* 수정 두번째 */
 
 
+▶delete
+▷deleteForm.jsp
+
+▷deleteProc.jsp
+1) dao.deleteArticle(num,passwd) 작업
+sql 1 : 비번 먼저 일치하는 지 체크해야 함
+
+sql 2 : delete
+
+2) 삭제된 Article이 해당 페이지의 마지막이었다면 이전페이지로 이동하도록 설정 ★
 
 
 
