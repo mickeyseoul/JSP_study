@@ -1,0 +1,61 @@
+13_Minimall
+JSP 게시판 5시간 안에 만들 수 있게 하도록 !!!
+
+미니프로젝트 주제 미리 정하기
+쇼핑몰, 예약사이트, 도서관 예약, 수강신청
+
+폴더 여러개 만듬 접근시 주의***
+request.getContextPath() : Webapp까지 주소 리턴
+상대경로
+절대경로
+
+▶main.jsp
+아이디 :
+비번 :
+로그인
+회원가입
+아이디찾기
+비번찾기
+
+▶회원가입
+▷register.jsp
+
+input 속성
+onBlur="" : 포커스를 잃었을 때
+onKeyup="" : 키보드를 눌렀다 땠을 때  != onkeydown
+
+button/submit 차이
+button onclick="location.ref='이동.jsp'"
+button onclick="눌렸을 때 사용할 함수()"
+submit <form action="이동.jsp">
+submit <form onsubmit = "눌렸을때 사용할 함수()">
+
+정규표현식
+var chk_num = pw.search(/[0-9]/);
+var chk_eng = pw.search(/[a-z]/);
+
+if(chk_num<0 || chk_eng<0){
+alert("비번은 숫자와 영문자의 조합으로 입력하세요");
+return;
+}
+
+▷registerPro.jsp
+
+▶아이디 찾기
+▷findid.jsp
+
+▷findidProc.jsp
+MemberDTO mdto = mdao.getMemberByRrn(name,rrn1,rrn2);
+
+
+
+▶비번 찾기
+▷findpw.jsp
+
+
+▷findpwProc.jsp
+
+▶로그인
+▷loginPro.jsp
+MemberDTO mdto = mdao.getMemberByInfo(id,password);
+
