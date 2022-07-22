@@ -6,8 +6,12 @@ JSP 게시판 5시간 안에 만들 수 있게 하도록 !!!
 
 폴더 여러개 만듬 접근시 주의***
 request.getContextPath() : Webapp까지 주소 리턴
-상대경로
-절대경로
+상대경로 : 현재를 기준으로 사용함 ./ 현재폴더 ../ 윗단계폴더
+절대경로 : Webapp을 기준으로 사용함
+
+스타일 외부CSS 사용할때
+<link rel="stylesheet" type="text/css" href="style.css">
+
 
 ▶main.jsp
 아이디 :
@@ -31,7 +35,7 @@ submit <form action="이동.jsp">
 submit <form onsubmit = "눌렸을때 사용할 함수()">
 
 정규표현식
-var chk_num = pw.search(/[0-9]/);
+var chk_num = pw.search(/[0-9]/); //없으면 -1 나옴
 var chk_eng = pw.search(/[a-z]/);
 
 if(chk_num<0 || chk_eng<0){
@@ -44,18 +48,18 @@ return;
 ▶아이디 찾기
 ▷findid.jsp
 
-▷findidProc.jsp
+▷findidPro.jsp
 MemberDTO mdto = mdao.getMemberByRrn(name,rrn1,rrn2);
-
 
 
 ▶비번 찾기
 ▷findpw.jsp
-
 
 ▷findpwProc.jsp
 
 ▶로그인
 ▷loginPro.jsp
 MemberDTO mdto = mdao.getMemberByInfo(id,password);
+회원인지 아닌지
+회원이라면 관리자인지 일반회원인지 구분 ★
 
